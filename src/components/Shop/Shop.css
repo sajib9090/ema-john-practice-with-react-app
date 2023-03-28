@@ -3,3 +3,8 @@
     grid-template-columns: 4fr 1fr;
 }
 
+@media (max-width: 576px) {
+    .shop{
+        grid-template-columns: 2fr 1fr;
+    }
+}
