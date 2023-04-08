@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { addToDb, getShoppingCart } from '../../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getShoppingCart } from '../../../utilities/fakedb';
 import '../Shop/Shop.css'
 import Cart from './Cart/Cart';
 import Product from './Product/Product';
+import { Link } from 'react-router-dom';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -48,11 +49,14 @@ const Shop = () => {
         const newCart = [...cart, singleProduct];
         setCart(newCart);
         addToDb(singleProduct.id)
-
+    }
+    const handleClearCart = () => {
+        setCart([]);
+        deleteShoppingCart();
     }
     return (
         <div className='shop max-w-7xl mx-auto'>
-            <div className='mt-[20px] md:mt-[100px] pl-[15px] md:pl-[70px] pr-5 grid grid-cols-1 md:grid-cols-3 gap-[30px]'>
+            <div className='mt-[20px] md:mt-[70px] pl-[15px] md:pl-[70px] pr-5 grid grid-cols-1 md:grid-cols-3 gap-[30px]'>
                 {
                     products.map(singleProduct => <Product 
                     singleProduct = {singleProduct}
@@ -63,7 +67,9 @@ const Shop = () => {
 
             </div>
             <div className=' bg-[rgba(255,153,0,0.30)] py-12'>
-                <Cart cart = {cart}/>
+                <Cart cart = {cart} handleClearCart = {handleClearCart}>
+                    <Link to="/orders"><button className='bg-green-600 text-white w-[95%] mt-4 px-4 py-2 rounded-sm'>Review order</button></Link>
+                </Cart>
 
             </div>
             
